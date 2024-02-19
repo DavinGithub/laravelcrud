@@ -11,24 +11,22 @@ class KelasController extends Controller
 
     public function index()
     {
-        $kelas = Kelas::all();
-
+        $kelasitem = Kelas::paginate(3);
+    
         return view('kelas', [
             'title' => 'Daftar Kelas',
-            'kelas' => $kelas,
+            'kelasitem' => $kelasitem,
         ]);
     }
+    
 
 
-    // app/Http/Controllers/StudentsController.php
-
-// app/Http/Controllers/KelasController.php
 
 public function create()
 {
     $kelas = Kelas::all();
 
-    return view('kelas', [
+    return view('dashboard.createkelas', [
         'title' => 'Tambah Data Siswa',
         'kelas' => $kelas,
     ]);
@@ -42,8 +40,16 @@ public function store(Request $request)
 
     Kelas::create($validatedData);
 
-    return redirect()->route('kelas.create')->with('success', 'Kelas berhasil ditambahkan');
-}
+    return redirect()->route('dashboard.student')->with('success', 'Data Kelas berhasil ditambahkan');
+}   
+
+public function destroy(Kelas $kelas)
+    {
+      $result = Kelas::destroy($kelas->id);
+      if($result) {
+        return redirect('/dashboard/kelas')->with('success', 'Data Kelas berhasil dihapus');
+      }
+    }
 
 
 }   

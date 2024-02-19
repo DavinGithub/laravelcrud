@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class StudentsController extends Controller
 {
-    public function index()
-    {
-        return view('student.all', [
-        "title"    => "students", 
-        "students" => Student::all()
-      ]);
-    }
+  public function index (){
+    $students = Student::paginate(3 ); 
+
+    return view ('student.all', [
+        'students' => $students, 
+    ]);
+}
 
     public function show($student)
     {
@@ -25,9 +25,11 @@ class StudentsController extends Controller
       ]);
     }
 
+    
+
     public function create()
 {
-  return view('student.create', [
+  return view('dashboard.create', [
     "title" => "create-student",
     "kelas" => Kelas::all()
   ]);                  
@@ -46,7 +48,7 @@ public function store(Request $request)
 
     $result = Student::create($validateData);
     if ($result) {
-        return redirect('/students/all')->with('success', 'Data siswa berhasil ditambahkan');
+        return redirect('/dashboard/student')->with('success', 'Data siswa berhasil ditambahkan');
     }
 }
 
@@ -55,13 +57,13 @@ public function store(Request $request)
     {
       $result = Student::destroy($student->id);
       if($result) {
-        return redirect('/students/all')->with('success', 'Data siswa berhasil dihapus');
+        return redirect('/dashboard/student')->with('success', 'Data siswa berhasil dihapus');
       }
     }
 
     public function edit(Student $student)
     {
-      return view('student.edit',[
+      return view('dashboard.edit',[
         "title" => "edit-data",
         "student" => $student,
         "kelas" => Kelas::all()
@@ -80,7 +82,7 @@ public function store(Request $request)
     $result = Student::where('id', $student->id)->update($validateData);
 
     if ($result) {
-      return redirect('/students/all')->with('success', 'Data siswa berhasil diubah !');
+      return redirect('/dashboard/student')->with('success', 'Data siswa berhasil diubah !');
     }
     }
 }

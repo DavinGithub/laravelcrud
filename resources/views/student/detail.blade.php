@@ -25,7 +25,7 @@
       <td>{{$student->nis}}</td>
       <td>{{$student->nama}}</td>
       <td>{{$student->tanggal_lahir}}</td>
-      <td>{{$student->kelas}}</td>
+      <td>{{ $student->kelas ? $student->kelas->nama : 'Tidak ada kelas' }}</td>
       <td>{{$student->alamat}}</td>
       <td>
         <a href="/students/all" class="btn btn-primary">Kembali</a>

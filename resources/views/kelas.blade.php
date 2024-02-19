@@ -1,24 +1,28 @@
-    @extends('layouts.main')
+@extends('layouts.main')
 
-    @section('container')
-        <h3>Create Kelas</h3>
-        @if(session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('success') }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      @endif
-
-        <form action="{{ route('kelas.store') }}" method="post">
-            @csrf
-
-            <div class="mb-3">
-                <label for="nama" class="form-label">Nama Kelas</label>
-                <input type="text" class="form-control" id="nama" name="nama" required value="{{ old('nama') }}">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-            <a href="{{ route('kelas.index') }}" class="btn btn-secondary">Kembali</a>
-        </form>
-    @endsection
+@section('container')
+    <h3>List Kelas</h3>
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Kelas</th>
+            </tr>
+          </thead>
+          @php
+              $no = 1;
+          @endphp
+   
+        @foreach ($kelasitem  as $kelass)
+        <tr>
+            <td>{{$no++}}</td>
+            <td>{{$kelass->nama }}</td>
+        </tr>
+        @endforeach
+    </table>
+</thead>
+{!! $kelasitem->withQueryString()->links('pagination::bootstrap-5') !!} 
+        
+    
+    
+@endsection
